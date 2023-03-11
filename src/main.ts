@@ -1,5 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { Console } from 'console';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -11,9 +12,14 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
+      transform: true,
+      transformOptions:{
+        enableImplicitConversion: true,
+      }
     })
    );
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
+  console.log(`App running on port ${ process.env.PORT }`);
 }
 bootstrap();
